@@ -28,9 +28,9 @@ class Items(Resource):
             dict = {}
             for doc in docs:
                 dict_doc = doc.to_dict()
-                print(dict_doc[id])
+                print(dict_doc["my_urls"][id])
                     
-            return dict_doc[id]
+            return dict_doc["my_urls"][id]
         except google.cloud.exceptions.NotFound:
             print(u"Missing data")
 
@@ -42,32 +42,18 @@ class Items(Resource):
 
         db = firestore.client()
 
-        ref = db.collection(u'items')
+        ref = db.collection(u'urls').document(u'all')
 
-        try:
-            docs = ref.get()
-            dict = {}
-            for doc in docs:
-                dict_doc = doc.to_dict()
-                if len(dict_doc) > 0:
-                    print(dict_doc)
-                    dict[dict_doc['items']['ID']] = dict_doc['items']
-                    print(dict_doc['items']['ID'])
-                    # return (u'items:{}'.format(dict_doc))
-            
-        except google.cloud.exceptions.NotFound:
-            print(u"Missing data")
-        print(dict)
-        for i in dict[id]:
-            print(i)
-            parser.add_argument(i)
+        
+        parser.add_argument(id)
 
 
         args  = parser.parse_args()
         print(args)
-        ref.document(id).set({u'items':args})
+        
+        ref.set({f"my_urls":args}, merge = True)
   
-        return {'ID': id, 'data':args}, 201
+        return args, 201
 
 
 
