@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shotur</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
 </head>
 <body>
 
     <h1>Welcome to ShotUr</h1>
 
 
+    <form action="{{url_for('hello')}}" method="post">
+        <input type="text" name="original" id="name" placeholder="Original">
+        <input type="text" name = "custom" placeholder="Custom">
+        <button type="submit">Submit</button>
+
+    </form>
 </body>
 </html>
